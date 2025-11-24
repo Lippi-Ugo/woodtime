@@ -1,40 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const defaultEnd = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+const defaultEnd = new Date(Date.now() + ((18 * 60 * 60) + (16 * 60) + 33) * 1000).toISOString();
 ---
 
 <Layout>
 	<section class="relative bg-cover bg-center bg-no-repeat min-h-screen" style="background-image: url('/image-1.webp');">
 		<div id="hero" data-end={defaultEnd} class="min-h-screen flex items-center">
 			<div class="max-w-4xl mx-auto text-center py-28 px-6">
-				<h1 class="text-white text-3xl sm:text-4xl font-bold">L'élégance naturelle. L'offre exceptionnelle.</h1>
-				<p class="text-gray-200 mt-4">Montres en bois éco-conçues — jusqu'à -40 % pendant 48h seulement.</p>
+				<h1 class="text-white text-xl lg:text-2xl">L'élégance naturelle. <span class="block p-2">L'offre exceptionnelle.</span></h1>
+				<h2 class="text-[#FEF3C6] text-lg lg:text-xl mt-4">Montres en bois éco-conçues — jusqu'à -40 % pendant 48h seulement.</h2>
 
 				<div class="mt-8 inline-flex items-center gap-4 bg-white/5 rounded-full px-4 py-3">
 					<div class="text-center px-3">
-						<div id="cd-days" class="text-2xl font-semibold text-white">--</div>
+						<div id="cd-days" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
 						<div class="text-xs text-gray-300">Jours</div>
 					</div>
 					<div class="text-center px-3">
-						<div id="cd-hours" class="text-2xl font-semibold text-white">--</div>
+						<div id="cd-hours" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
 						<div class="text-xs text-gray-300">Heures</div>
 					</div>
 					<div class="text-center px-3">
-						<div id="cd-mins" class="text-2xl font-semibold text-white">--</div>
+						<div id="cd-mins" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
 						<div class="text-xs text-gray-300">Minutes</div>
 					</div>
 					<div class="text-center px-3">
-						<div id="cd-secs" class="text-2xl font-semibold text-white">--</div>
+						<div id="cd-secs" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
 						<div class="text-xs text-gray-300">Secondes</div>
 					</div>
 				</div>
 
 				<div class="mt-6">
-					<a id="cta-btn" href="#" class="inline-block bg-[#ff7a0a] text-white font-bold px-6 py-3 rounded-full">J'achète maintenant</a>
+					<a id="cta-btn" href="#" class="inline-block bg-[#ff7a0a] text-white px-6 py-3 rounded-full">J'en profite maintenant</a>
 				</div>
 
 				<p class="sr-only" id="cd-live" aria-live="polite">Décompte en cours</p>
-			</div>
+				</div>
+
+				<!-- Scroll indicator (souris) animé -->
+				<a href="#below-fold" class="absolute left-1/2 -translate-x-1/2 bottom-24 lg:bottom-12 flex items-center justify-center" aria-label="Aller au contenu">
+					<span class="w-6 h-10 rounded-[20px] border-2 border-[#ff7a0a] flex items-center justify-center p-2">
+						<span class="w-1 h-3 bg-[#ff7a0a] rounded-full" style="animation: scrollBounce 3s infinite ease-in-out;"></span>
+					</span>
+				</a>
 		</div>
 	</section>
 
@@ -78,10 +85,19 @@ const defaultEnd = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 				diff -= mins * 60*1000;
 				const secs = Math.floor(diff / 1000);
 
-				$days.textContent = days;
-				$hours.textContent = pad(hours);
-				$mins.textContent = pad(mins);
-				$secs.textContent = pad(secs);
+				// Mettre à jour les spans internes pour conserver le style bg-orange
+				if($days) {
+					const s = $days.querySelector('span'); if(s) s.textContent = days; else $days.textContent = days;
+				}
+				if($hours) {
+					const s = $hours.querySelector('span'); if(s) s.textContent = pad(hours); else $hours.textContent = pad(hours);
+				}
+				if($mins) {
+					const s = $mins.querySelector('span'); if(s) s.textContent = pad(mins); else $mins.textContent = pad(mins);
+				}
+				if($secs) {
+					const s = $secs.querySelector('span'); if(s) s.textContent = pad(secs); else $secs.textContent = pad(secs);
+				}
 				if($live) $live.textContent = `Temps restant : ${days} jours ${pad(hours)} heures ${pad(mins)} minutes ${pad(secs)} secondes`;
 
 				if(days===0 && hours===0 && mins===0 && secs===0){
@@ -101,5 +117,12 @@ const defaultEnd = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 			initCountdown();
 		}
 	</script>
+
+	<style>
+		@keyframes scrollBounce {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(8px); }
+		}
+	</style>
 
 </Layout>
