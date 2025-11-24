@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
 const defaultEnd = new Date(Date.now() + ((18 * 60 * 60) + (16 * 60) + 33) * 1000).toISOString();
 ---
 
@@ -44,6 +45,21 @@ const defaultEnd = new Date(Date.now() + ((18 * 60 * 60) + (16 * 60) + 33) * 100
 				</a>
 		</div>
 	</section>
+
+		<!-- Produits en vedette -->
+		<section id="below-fold" class="py-16 bg-white">
+			<div class="max-w-7xl mx-auto px-6">
+				<h2 class="text-center text-gray-700 text-sm font-medium">Nos Modèles Phares</h2>
+				<p class="text-center text-gray-500 text-sm mt-2 mb-8">Chaque montre est une pièce unique, assemblée à la main en France.</p>
+
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+					<Card title="Bois clair" image="/montre-1.webp" price="99€" oldPrice="149€" />
+					<Card title="Noyer" image="/montre-2.webp" price="99€" oldPrice="169€" badge="Best-seller" />
+					<Card title="Ébène" image="/montre-3.webp" price="109€" oldPrice="179€" />
+					<Card title="Bambou" image="/montre-4.webp" price="95€" oldPrice="159€" />
+				</div>
+			</div>
+		</section>
 
 	<script type="module">
 		// Read server-side date from hero data attribute and run countdown after DOM ready

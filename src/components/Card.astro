@@ -1,0 +1,29 @@
+---
+export interface Props {
+  title: string;
+  image: string;
+  price: string;
+  oldPrice?: string;
+  badge?: string;
+}
+const { title, image, price, oldPrice, badge }: Props = Astro.props;
+---
+
+<article class="bg-white rounded-xl shadow-md overflow-hidden group">
+  <div class="relative">
+    <img src={image} alt={title} class="w-full h-full object-cover" />
+    {badge ? (
+      <span class="absolute top-3 left-3 bg-[#ff7a0a] text-white text-xs font-bold px-2 py-1 rounded">{badge}</span>
+    ) : null}
+  </div>
+
+  <div class="p-4">
+    <h3 class="text-sm font-medium text-gray-900 mb-2">{title}</h3>
+    <div class="flex items-baseline gap-3 mb-4">
+      {oldPrice ? (<span class="text-xs text-gray-400 line-through">{oldPrice}</span>) : null}
+      <span class="text-lg font-semibold text-[#ff7a0a]">{price}</span>
+    </div>
+
+    <a class="inline-block w-full text-center bg-black text-white text-sm py-2 rounded-md hover:bg-gray-900" href="#">Commander maintenant</a>
+  </div>
+</article>
