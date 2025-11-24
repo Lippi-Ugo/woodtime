@@ -1,125 +1,262 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-const defaultEnd = new Date(Date.now() + ((18 * 60 * 60) + (16 * 60) + 33) * 1000).toISOString();
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+const defaultEnd = new Date(
+	Date.now() + (18 * 60 * 60 + 16 * 60 + 33) * 1000,
+).toISOString();
 ---
 
 <Layout>
-	<section class="relative bg-cover bg-center bg-no-repeat min-h-screen" style="background-image: url('/image-1.webp');">
-		<div id="hero" data-end={defaultEnd} class="min-h-screen flex items-center">
+	<section
+		class="relative bg-cover bg-center bg-no-repeat min-h-screen"
+		style="background-image: url('/image-1.webp');"
+	>
+		<div
+			id="hero"
+			data-end={defaultEnd}
+			class="min-h-screen flex items-center"
+		>
 			<div class="max-w-4xl mx-auto text-center py-28 px-6">
-				<h1 class="text-white text-xl lg:text-2xl">L'élégance naturelle. <span class="block p-2">L'offre exceptionnelle.</span></h1>
-				<h2 class="text-[#FEF3C6] text-lg lg:text-xl mt-4">Montres en bois éco-conçues — jusqu'à -40 % pendant 48h seulement.</h2>
+				<h1 class="text-white text-xl lg:text-2xl">
+					L'élégance naturelle. <span class="block p-2"
+						>L'offre exceptionnelle.</span>
+				</h1>
+				<h2 class="text-[#FEF3C6] text-lg lg:text-xl mt-4">
+					Montres en bois éco-conçues — jusqu'à -40 % pendant 48h
+					seulement.
+				</h2>
 
-				<div class="mt-8 inline-flex items-center gap-4 bg-white/5 rounded-full px-4 py-3">
+				<div
+					class="mt-8 inline-flex items-center gap-4 bg-white/5 rounded-full px-4 py-3"
+				>
 					<div class="text-center px-3">
-						<div id="cd-days" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
+						<div
+							id="cd-days"
+							class="text-2xl font-semibold text-white"
+						>
+							<span
+								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
+								>--</span>
+						</div>
 						<div class="text-xs text-gray-300">Jours</div>
 					</div>
 					<div class="text-center px-3">
-						<div id="cd-hours" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
+						<div
+							id="cd-hours"
+							class="text-2xl font-semibold text-white"
+						>
+							<span
+								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
+								>--</span>
+						</div>
 						<div class="text-xs text-gray-300">Heures</div>
 					</div>
 					<div class="text-center px-3">
-						<div id="cd-mins" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
+						<div
+							id="cd-mins"
+							class="text-2xl font-semibold text-white"
+						>
+							<span
+								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
+								>--</span>
+						</div>
 						<div class="text-xs text-gray-300">Minutes</div>
 					</div>
 					<div class="text-center px-3">
-						<div id="cd-secs" class="text-2xl font-semibold text-white"><span class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block">--</span></div>
+						<div
+							id="cd-secs"
+							class="text-2xl font-semibold text-white"
+						>
+							<span
+								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
+								>--</span>
+						</div>
 						<div class="text-xs text-gray-300">Secondes</div>
 					</div>
 				</div>
 
 				<div class="mt-6">
-					<a id="cta-btn" href="#" class="inline-block bg-[#ff7a0a] text-white px-6 py-3 rounded-full">J'en profite maintenant</a>
+					<a
+						id="cta-btn"
+						href="#"
+						class="inline-block bg-[#ff7a0a] text-white px-6 py-3 rounded-full"
+						>J'en profite maintenant</a
+					>
 				</div>
 
-				<p class="sr-only" id="cd-live" aria-live="polite">Décompte en cours</p>
-				</div>
+				<p class="sr-only" id="cd-live" aria-live="polite">
+					Décompte en cours
+				</p>
+			</div>
 
-				<!-- Scroll indicator (souris) animé -->
-				<a href="#below-fold" class="absolute left-1/2 -translate-x-1/2 bottom-24 lg:bottom-18 flex items-center justify-center" aria-label="Aller au contenu">
-					<span class="w-6 h-10 rounded-[20px] border-2 border-[#ff7a0a] flex items-center justify-center p-2">
-						<span class="w-1 h-3 bg-[#ff7a0a] rounded-full" style="animation: scrollBounce 3s infinite ease-in-out;"></span>
-					</span>
-				</a>
+			<!-- Scroll indicator (souris) animé -->
+			<a
+				href="#below-fold"
+				class="absolute left-1/2 -translate-x-1/2 bottom-24 lg:bottom-18 flex items-center justify-center"
+				aria-label="Aller au contenu"
+			>
+				<span
+					class="w-6 h-10 rounded-[20px] border-2 border-[#ff7a0a] flex items-center justify-center p-2"
+				>
+					<span
+						class="w-1 h-3 bg-[#ff7a0a] rounded-full"
+						style="animation: scrollBounce 3s infinite ease-in-out;"
+					></span>
+				</span>
+			</a>
 		</div>
 	</section>
 
-		<!-- Produits en vedette -->
-		<section id="below-fold" class="py-16 bg-white">
-			<div class="max-w-7xl mx-auto px-6">
-				<h2 class="text-center text-gray-700 text-sm font-medium">Nos Modèles Phares</h2>
-				<p class="text-center text-gray-500 text-sm mt-2 mb-8">Chaque montre est une pièce unique, assemblée à la main en France.</p>
+	<!-- Produits en vedette -->
+	<section id="below-fold" class="py-16 bg-white">
+		<div class="max-w-7xl mx-auto px-6">
+			<h2 class="text-center text-gray-700 text-sm font-medium">
+				Nos Modèles Phares
+			</h2>
+			<p class="text-center text-gray-500 text-sm mt-2 mb-8">
+				Chaque montre est une pièce unique, assemblée à la main en
+				France.
+			</p>
 
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-					<Card title="Bois clair" image="/montre-1.webp" price="99€" oldPrice="149€" />
-					<Card title="Noyer" image="/montre-2.webp" price="99€" oldPrice="169€" badge="Best-seller" />
-					<Card title="Ébène" image="/montre-3.webp" price="109€" oldPrice="179€" />
-					<Card title="Bambou" image="/montre-4.webp" price="95€" oldPrice="159€" />
-				</div>
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+				<Card
+					title="Bois clair"
+					image="/montre-1.webp"
+					price="99€"
+					oldPrice="149€"
+				/>
+				<Card
+					title="Noyer"
+					image="/montre-2.webp"
+					price="99€"
+					oldPrice="169€"
+					badge="Best-seller"
+				/>
+				<Card
+					title="Ébène"
+					image="/montre-3.webp"
+					price="109€"
+					oldPrice="179€"
+				/>
+				<Card
+					title="Bambou"
+					image="/montre-4.webp"
+					price="95€"
+					oldPrice="159€"
+				/>
 			</div>
-		</section>
+		</div>
+	</section>
+	
+	<!-- Features: éco-responsable / design / fabrication locale -->
+	<section class="bg-[#0b0b0b] text-gray-200 py-16">
+		<div class="max-w-7xl mx-auto px-6">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start text-center">
+
+				<div class="flex flex-col items-center">
+					<div class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4">
+						<!-- leaf icon -->
+						<img src="/Icon.svg" alt="">
+					</div>
+					<h3 class="text-white font-semibold text-sm">Éco-responsable</h3>
+					<p class="text-sm text-gray-400 mt-2 max-w-xs">Bois issu de forêts gérées durablement.</p>
+				</div>
+
+				<div class="flex flex-col items-center">
+					<div class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4">
+						<!-- watch icon -->
+						<img src="/watch-outline-rounded.svg" alt="">
+					</div>
+					<h3 class="text-white font-semibold text-sm">Design unique</h3>
+					<p class="text-sm text-gray-400 mt-2 max-w-xs">Chaque montre est une pièce originale.</p>
+				</div>
+
+				<div class="flex flex-col items-center">
+					<div class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4">
+						<!-- location icon -->
+						<img src="/Icon-map.svg" alt="">
+					</div>
+					<h3 class="text-white font-semibold text-sm">Fabrication locale</h3>
+					<p class="text-sm text-gray-400 mt-2 max-w-xs">Assemblée à la main en France.</p>
+				</div>
+
+			</div>
+		</div>
+	</section>
 
 	<script type="module">
 		// Read server-side date from hero data attribute and run countdown after DOM ready
 		let endDate = null;
-		function resolveEndDate(){
-			const heroEl = document.getElementById('hero');
-			if(heroEl && heroEl.dataset && heroEl.dataset.end){
+		function resolveEndDate() {
+			const heroEl = document.getElementById("hero");
+			if (heroEl && heroEl.dataset && heroEl.dataset.end) {
 				const d = new Date(heroEl.dataset.end);
-				if(!isNaN(d)) return d;
+				if (!isNaN(d)) return d;
 			}
 			// fallback: 48h from now
 			return new Date(Date.now() + 48 * 60 * 60 * 1000);
 		}
 
-		function pad(n){ return String(n).padStart(2,'0'); }
+		function pad(n) {
+			return String(n).padStart(2, "0");
+		}
 
-		function initCountdown(){
-			const $days = document.getElementById('cd-days');
-			const $hours = document.getElementById('cd-hours');
-			const $mins = document.getElementById('cd-mins');
-			const $secs = document.getElementById('cd-secs');
-			const $live = document.getElementById('cd-live');
-			const $cta = document.getElementById('cta-btn');
+		function initCountdown() {
+			const $days = document.getElementById("cd-days");
+			const $hours = document.getElementById("cd-hours");
+			const $mins = document.getElementById("cd-mins");
+			const $secs = document.getElementById("cd-secs");
+			const $live = document.getElementById("cd-live");
+			const $cta = document.getElementById("cta-btn");
 
-			if(!$days || ! $hours || ! $mins || ! $secs) return;
+			if (!$days || !$hours || !$mins || !$secs) return;
 
 			let timer = null;
 			endDate = resolveEndDate();
 
-			function update(){
+			function update() {
 				const now = new Date();
 				let diff = Math.max(0, endDate - now);
 
-				const days = Math.floor(diff / (24*60*60*1000));
-				diff -= days * 24*60*60*1000;
-				const hours = Math.floor(diff / (60*60*1000));
-				diff -= hours * 60*60*1000;
-				const mins = Math.floor(diff / (60*1000));
-				diff -= mins * 60*1000;
+				const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+				diff -= days * 24 * 60 * 60 * 1000;
+				const hours = Math.floor(diff / (60 * 60 * 1000));
+				diff -= hours * 60 * 60 * 1000;
+				const mins = Math.floor(diff / (60 * 1000));
+				diff -= mins * 60 * 1000;
 				const secs = Math.floor(diff / 1000);
 
 				// Mettre à jour les spans internes pour conserver le style bg-orange
-				if($days) {
-					const s = $days.querySelector('span'); if(s) s.textContent = days; else $days.textContent = days;
+				if ($days) {
+					const s = $days.querySelector("span");
+					if (s) s.textContent = days;
+					else $days.textContent = days;
 				}
-				if($hours) {
-					const s = $hours.querySelector('span'); if(s) s.textContent = pad(hours); else $hours.textContent = pad(hours);
+				if ($hours) {
+					const s = $hours.querySelector("span");
+					if (s) s.textContent = pad(hours);
+					else $hours.textContent = pad(hours);
 				}
-				if($mins) {
-					const s = $mins.querySelector('span'); if(s) s.textContent = pad(mins); else $mins.textContent = pad(mins);
+				if ($mins) {
+					const s = $mins.querySelector("span");
+					if (s) s.textContent = pad(mins);
+					else $mins.textContent = pad(mins);
 				}
-				if($secs) {
-					const s = $secs.querySelector('span'); if(s) s.textContent = pad(secs); else $secs.textContent = pad(secs);
+				if ($secs) {
+					const s = $secs.querySelector("span");
+					if (s) s.textContent = pad(secs);
+					else $secs.textContent = pad(secs);
 				}
-				if($live) $live.textContent = `Temps restant : ${days} jours ${pad(hours)} heures ${pad(mins)} minutes ${pad(secs)} secondes`;
+				if ($live)
+					$live.textContent = `Temps restant : ${days} jours ${pad(hours)} heures ${pad(mins)} minutes ${pad(secs)} secondes`;
 
-				if(days===0 && hours===0 && mins===0 && secs===0){
+				if (days === 0 && hours === 0 && mins === 0 && secs === 0) {
 					clearInterval(timer);
-					if($live) $live.textContent = 'Offre terminée';
-					if($cta) { $cta.classList.add('opacity-50','pointer-events-none'); $cta.textContent = 'Offre terminée'; }
+					if ($live) $live.textContent = "Offre terminée";
+					if ($cta) {
+						$cta.classList.add("opacity-50", "pointer-events-none");
+						$cta.textContent = "Offre terminée";
+					}
 				}
 			}
 
@@ -127,8 +264,8 @@ const defaultEnd = new Date(Date.now() + ((18 * 60 * 60) + (16 * 60) + 33) * 100
 			timer = setInterval(update, 1000);
 		}
 
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', initCountdown);
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", initCountdown);
 		} else {
 			initCountdown();
 		}
@@ -136,9 +273,13 @@ const defaultEnd = new Date(Date.now() + ((18 * 60 * 60) + (16 * 60) + 33) * 100
 
 	<style>
 		@keyframes scrollBounce {
-			0%, 100% { transform: translateY(0); }
-			50% { transform: translateY(8px); }
+			0%,
+			100% {
+				transform: translateY(0);
+			}
+			50% {
+				transform: translateY(8px);
+			}
 		}
 	</style>
-
 </Layout>
