@@ -1,7 +1,105 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const defaultEnd = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 ---
 
 <Layout>
-	
+	<section class="relative bg-cover bg-center bg-no-repeat min-h-screen" style="background-image: url('/image-1.webp');">
+		<div id="hero" data-end={defaultEnd} class="min-h-screen flex items-center">
+			<div class="max-w-4xl mx-auto text-center py-28 px-6">
+				<h1 class="text-white text-3xl sm:text-4xl font-bold">L'élégance naturelle. L'offre exceptionnelle.</h1>
+				<p class="text-gray-200 mt-4">Montres en bois éco-conçues — jusqu'à -40 % pendant 48h seulement.</p>
+
+				<div class="mt-8 inline-flex items-center gap-4 bg-white/5 rounded-full px-4 py-3">
+					<div class="text-center px-3">
+						<div id="cd-days" class="text-2xl font-semibold text-white">--</div>
+						<div class="text-xs text-gray-300">Jours</div>
+					</div>
+					<div class="text-center px-3">
+						<div id="cd-hours" class="text-2xl font-semibold text-white">--</div>
+						<div class="text-xs text-gray-300">Heures</div>
+					</div>
+					<div class="text-center px-3">
+						<div id="cd-mins" class="text-2xl font-semibold text-white">--</div>
+						<div class="text-xs text-gray-300">Minutes</div>
+					</div>
+					<div class="text-center px-3">
+						<div id="cd-secs" class="text-2xl font-semibold text-white">--</div>
+						<div class="text-xs text-gray-300">Secondes</div>
+					</div>
+				</div>
+
+				<div class="mt-6">
+					<a id="cta-btn" href="#" class="inline-block bg-[#ff7a0a] text-white font-bold px-6 py-3 rounded-full">J'achète maintenant</a>
+				</div>
+
+				<p class="sr-only" id="cd-live" aria-live="polite">Décompte en cours</p>
+			</div>
+		</div>
+	</section>
+
+	<script type="module">
+		// Read server-side date from hero data attribute and run countdown after DOM ready
+		let endDate = null;
+		function resolveEndDate(){
+			const heroEl = document.getElementById('hero');
+			if(heroEl && heroEl.dataset && heroEl.dataset.end){
+				const d = new Date(heroEl.dataset.end);
+				if(!isNaN(d)) return d;
+			}
+			// fallback: 48h from now
+			return new Date(Date.now() + 48 * 60 * 60 * 1000);
+		}
+
+		function pad(n){ return String(n).padStart(2,'0'); }
+
+		function initCountdown(){
+			const $days = document.getElementById('cd-days');
+			const $hours = document.getElementById('cd-hours');
+			const $mins = document.getElementById('cd-mins');
+			const $secs = document.getElementById('cd-secs');
+			const $live = document.getElementById('cd-live');
+			const $cta = document.getElementById('cta-btn');
+
+			if(!$days || ! $hours || ! $mins || ! $secs) return;
+
+			let timer = null;
+			endDate = resolveEndDate();
+
+			function update(){
+				const now = new Date();
+				let diff = Math.max(0, endDate - now);
+
+				const days = Math.floor(diff / (24*60*60*1000));
+				diff -= days * 24*60*60*1000;
+				const hours = Math.floor(diff / (60*60*1000));
+				diff -= hours * 60*60*1000;
+				const mins = Math.floor(diff / (60*1000));
+				diff -= mins * 60*1000;
+				const secs = Math.floor(diff / 1000);
+
+				$days.textContent = days;
+				$hours.textContent = pad(hours);
+				$mins.textContent = pad(mins);
+				$secs.textContent = pad(secs);
+				if($live) $live.textContent = `Temps restant : ${days} jours ${pad(hours)} heures ${pad(mins)} minutes ${pad(secs)} secondes`;
+
+				if(days===0 && hours===0 && mins===0 && secs===0){
+					clearInterval(timer);
+					if($live) $live.textContent = 'Offre terminée';
+					if($cta) { $cta.classList.add('opacity-50','pointer-events-none'); $cta.textContent = 'Offre terminée'; }
+				}
+			}
+
+			update();
+			timer = setInterval(update, 1000);
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initCountdown);
+		} else {
+			initCountdown();
+		}
+	</script>
+
 </Layout>
