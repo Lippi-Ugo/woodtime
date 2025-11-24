@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Utiliser Arimo comme police principale (fallback générique uniquement) */
+body {
+  font-family: 'Arimo', sans-serif;
+}
