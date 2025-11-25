@@ -289,23 +289,37 @@ try {
 	</section>
 
 	<script type="module">
-		// Read server-side date from hero data attribute and run countdown after DOM ready
+		// Countdown: prefer server-written /countdown.json (build time) so the counter
+		// is global and keeps decrementing across visits. Fallback to hero dataset
+		// or 48h from now if missing.
 		let endDate = null;
-		function resolveEndDate() {
-			const heroEl = document.getElementById("hero");
-			if (heroEl && heroEl.dataset && heroEl.dataset.end) {
-				const d = new Date(heroEl.dataset.end);
-				if (!isNaN(d)) return d;
-			}
-			// fallback: 48h from now
-			return new Date(Date.now() + 48 * 60 * 60 * 1000);
-		}
 
 		function pad(n) {
 			return String(n).padStart(2, "0");
 		}
 
-		function initCountdown() {
+		async function fetchPublicCountdown() {
+			try {
+				const res = await fetch('/countdown.json', { cache: 'no-store' });
+				if (!res.ok) return null;
+				const json = await res.json();
+				if (json && json.end) return new Date(json.end);
+			} catch (e) {
+				return null;
+			}
+			return null;
+		}
+
+		function resolveEndFromDataset() {
+			const heroEl = document.getElementById("hero");
+			if (heroEl && heroEl.dataset && heroEl.dataset.end) {
+				const d = new Date(heroEl.dataset.end);
+				if (!isNaN(d)) return d;
+			}
+			return null;
+		}
+
+		async function initCountdown() {
 			const $days = document.getElementById("cd-days");
 			const $hours = document.getElementById("cd-hours");
 			const $mins = document.getElementById("cd-mins");
@@ -315,8 +329,18 @@ try {
 
 			if (!$days || !$hours || !$mins || !$secs) return;
 
+			// try /countdown.json first (served from public/ and written at build/deploy)
+			const pub = await fetchPublicCountdown();
+			if (pub) {
+				endDate = pub;
+			} else {
+				// then try dataset (if page was built with a baked-in date)
+				const ds = resolveEndFromDataset();
+				if (ds) endDate = ds;
+				else endDate = new Date(Date.now() + 48 * 60 * 60 * 1000);
+			}
+
 			let timer = null;
-			endDate = resolveEndDate();
 
 			function update() {
 				const now = new Date();
@@ -330,7 +354,6 @@ try {
 				diff -= mins * 60 * 1000;
 				const secs = Math.floor(diff / 1000);
 
-				// Mettre à jour les spans internes pour conserver le style bg-orange
 				if ($days) {
 					const s = $days.querySelector("span");
 					if (s) s.textContent = days;
