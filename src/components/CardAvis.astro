@@ -1,0 +1,22 @@
+---
+const { note = 0, avis = '', auteur = '' } = Astro.props;
+const stars = Array.from({ length: 5 });
+---
+
+<article class="bg-white rounded-lg shadow-sm p-6 text-gray-800">
+  <div class="mb-3" role="img" aria-label={`Note : ${note} sur 5`}>
+    <div class="flex items-center gap-2 justify-start">
+      {stars.map((_, i) => {
+        const filled = i < Number(note);
+        const src = filled ? '/etoile.svg' : '/etoile_vide.svg';
+        const alt = filled ? `Étoile pleine ${i + 1}` : `Étoile vide ${i + 1}`;
+        return (
+          <img src={src} alt={alt} class={filled ? 'w-5 h-5' : 'w-5 h-5 opacity-60'} />
+        );
+      })}
+      </div>
+  </div>
+
+  <blockquote class="text-sm italic text-gray-600 m-6">"{avis}"</blockquote>
+  <cite class="block text-xs text-gray-500">— {auteur}</cite>
+</article>

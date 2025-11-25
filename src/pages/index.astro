@@ -1,9 +1,20 @@
 ---
+import fs from 'fs';
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
-const defaultEnd = new Date(
-	Date.now() + (18 * 60 * 60 + 16 * 60 + 33) * 1000,
-).toISOString();
+import CardAvis from "../components/CardAvis.astro";
+
+let defaultEnd;
+try {
+	// read the countdown end written at deploy/build time to public/countdown.json
+	const p = new URL('../../public/countdown.json', import.meta.url);
+	const raw = fs.readFileSync(p, 'utf-8');
+	const parsed = JSON.parse(raw);
+	if (parsed && parsed.end) defaultEnd = parsed.end;
+} catch (e) {
+	// fallback: 48h from build time
+	defaultEnd = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+}
 ---
 
 <Layout>
@@ -19,7 +30,8 @@ const defaultEnd = new Date(
 			<div class="max-w-4xl mx-auto text-center py-28 px-6">
 				<h1 class="text-white text-xl lg:text-2xl">
 					L'élégance naturelle. <span class="block p-2"
-						>L'offre exceptionnelle.</span>
+						>L'offre exceptionnelle.</span
+					>
 				</h1>
 				<h2 class="text-[#FEF3C6] text-lg lg:text-xl mt-4">
 					Montres en bois éco-conçues — jusqu'à -40 % pendant 48h
@@ -36,7 +48,8 @@ const defaultEnd = new Date(
 						>
 							<span
 								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
-								>--</span>
+								>--</span
+							>
 						</div>
 						<div class="text-xs text-gray-300">Jours</div>
 					</div>
@@ -47,7 +60,8 @@ const defaultEnd = new Date(
 						>
 							<span
 								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
-								>--</span>
+								>--</span
+							>
 						</div>
 						<div class="text-xs text-gray-300">Heures</div>
 					</div>
@@ -58,7 +72,8 @@ const defaultEnd = new Date(
 						>
 							<span
 								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
-								>--</span>
+								>--</span
+							>
 						</div>
 						<div class="text-xs text-gray-300">Minutes</div>
 					</div>
@@ -69,7 +84,8 @@ const defaultEnd = new Date(
 						>
 							<span
 								class="bg-[#ff7a0a] text-white px-3 py-1 rounded-md inline-block"
-								>--</span>
+								>--</span
+							>
 						</div>
 						<div class="text-xs text-gray-300">Secondes</div>
 					</div>
@@ -147,39 +163,127 @@ const defaultEnd = new Date(
 			</div>
 		</div>
 	</section>
-	
+
 	<!-- Features: éco-responsable / design / fabrication locale -->
 	<section class="bg-[#0b0b0b] text-gray-200 py-16">
 		<div class="max-w-7xl mx-auto px-6">
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start text-center">
-
+			<div
+				class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start text-center"
+			>
 				<div class="flex flex-col items-center">
-					<div class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4">
+					<div
+						class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4"
+					>
 						<!-- leaf icon -->
-						<img src="/Icon.svg" alt="">
+						<img src="/Icon.svg" alt="" />
 					</div>
-					<h3 class="text-white font-semibold text-sm">Éco-responsable</h3>
-					<p class="text-sm text-gray-400 mt-2 max-w-xs">Bois issu de forêts gérées durablement.</p>
+					<h3 class="text-white font-semibold text-sm">
+						Éco-responsable
+					</h3>
+					<p class="text-sm text-gray-400 mt-2 max-w-xs">
+						Bois issu de forêts gérées durablement.
+					</p>
 				</div>
 
 				<div class="flex flex-col items-center">
-					<div class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4">
+					<div
+						class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4"
+					>
 						<!-- watch icon -->
-						<img src="/watch-outline-rounded.svg" alt="">
+						<img src="/watch-outline-rounded.svg" alt="" />
 					</div>
-					<h3 class="text-white font-semibold text-sm">Design unique</h3>
-					<p class="text-sm text-gray-400 mt-2 max-w-xs">Chaque montre est une pièce originale.</p>
+					<h3 class="text-white font-semibold text-sm">
+						Design unique
+					</h3>
+					<p class="text-sm text-gray-400 mt-2 max-w-xs">
+						Chaque montre est une pièce originale.
+					</p>
 				</div>
 
 				<div class="flex flex-col items-center">
-					<div class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4">
+					<div
+						class="w-16 h-16 rounded-full bg-black/40 flex items-center justify-center mb-4"
+					>
 						<!-- location icon -->
-						<img src="/Icon-map.svg" alt="">
+						<img src="/Icon-map.svg" alt="" />
 					</div>
-					<h3 class="text-white font-semibold text-sm">Fabrication locale</h3>
-					<p class="text-sm text-gray-400 mt-2 max-w-xs">Assemblée à la main en France.</p>
+					<h3 class="text-white font-semibold text-sm">
+						Fabrication locale
+					</h3>
+					<p class="text-sm text-gray-400 mt-2 max-w-xs">
+						Assemblée à la main en France.
+					</p>
 				</div>
+			</div>
+		</div>
+	</section>
 
+	<!-- Collection CTA: image avec overlay sombre + texte centré + bouton -->
+	<section class="relative bg-cover bg-center bg-no-repeat">
+		<img
+			src="/image-2.webp"
+			alt="Montre en bois"
+			class="w-full h-auto object-contain block"
+		/>
+		<div class="absolute inset-0 bg-black/30"></div>
+		<div class="absolute inset-0 flex items-center justify-center">
+			<div class="max-w-3xl text-center px-6 py-24 md:py-32 lg:py-40">
+				<p class="text-sm text-white/80 mb-4">
+					Alliez élégance, éthique et performance.
+				</p>
+				<p
+					class="text-white text-base md:text-lg lg:text-xl font-medium mb-6"
+				>
+					Nos montres s'adaptent à tous les styles — du quotidien à
+					l'exceptionnel.
+				</p>
+				<a
+					href="#"
+					class="inline-block bg-white text-gray-800 rounded-full px-6 py-2 text-sm font-semibold"
+					>Découvrir la collection</a
+				>
+			</div>
+		</div>
+	</section>
+	
+	<!-- Témoignages clients -->
+	<section class="py-12 bg-gray-50">
+		<div class="max-w-7xl mx-auto px-6 text-center">
+			<p class="text-lg text-[#1C1917]">Ce que disent nos clients</p>
+			<p class="text-md text-[#57534D] mt-2 mb-8">Des centaines d'avis positifs pour des montres uniques.</p>
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+				<CardAvis note={5} avis={"Une montre légère et magnifique, parfaite pour offrir !"} auteur={"Marie L."} />
+				<CardAvis note={4} avis={"Un design unique, et en plus éco-responsable."} auteur={"Thomas P."} />
+				<CardAvis note={5} avis={"Livraison rapide, packaging soigné. J'adore !"} auteur={"Léa G."} />
+			</div>
+		</div>
+	</section>
+	
+	<!-- Section promotionnelle dégradé diagonal -->
+	<section class="relative">
+		<div class="w-full" style="background: linear-gradient(135deg, #E17100 0%, #BB4D00 50%, #7B3306 100%);">
+			<div class="max-w-3xl mx-auto text-center px-6 py-12 md:py-16 lg:py-20">
+				<p class="text-xs lg:text-lg text-white/90 mb-8">Offre Black Friday : jusqu'à -40 % sur toute la collection !</p>
+				<p class="text-[#FEF3C6] text-base md:text-md lg:text-xl font-medium mb-10">Profitez-en avant minuit ce soir.</p>
+				<div class="flex flex-col items-center gap-4">
+					<a href="#" class="inline-block bg-black/80 text-white lg:text-sm px-8 py-3 rounded-full shadow-lg mb-8">Je commande avant la fin de la promo</a>
+					<a href="#" class="inline-block border border-white/30 text-white lg:text-md px-6 py-3 rounded-md bg-[#FFFFFF]/20">Livraison gratuite + coffret cadeau offert !</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	
+	<!-- Section: images côte-à-côte + texte centré -->
+	<section class="py-12 bg-white">
+		<div class="max-w-7xl mx-auto px-6">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+				<img src="/image-3.webp" alt="Forêt" class="w-full h-auto object-cover block" />
+				<img src="/image-4.webp" alt="Fabrication" class="w-full h-auto object-cover block" />
+			</div>
+			<div class="mt-6 text-center">
+				<p class="text-xs text-gray-600">Nos montres soutiennent une production locale et durable.</p>
+				<p class="text-sm text-gray-500 mt-3">Chaque achat contribue à la reforestation et à la préservation des savoir-faire artisanaux.</p>
 			</div>
 		</div>
 	</section>
